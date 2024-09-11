@@ -1,0 +1,64 @@
+CREATE TABLE clientes (
+  cli_id INT NOT NULL AUTO_INCREMENT,
+  cli_tipo VARCHAR(4) NOT NULL,
+  cli_cpf VARCHAR(16) DEFAULT NULL,
+  cli_cnpj VARCHAR(20) DEFAULT NULL,
+  cli_nome VARCHAR(45) DEFAULT NULL,
+  cli_data_nascimento DATE DEFAULT NULL,
+  cli_cep VARCHAR(15) DEFAULT NULL,
+  cli_end VARCHAR(70) DEFAULT NULL,
+  cli_num INT DEFAULT NULL,
+  cli_bairro VARCHAR(60) DEFAULT NULL,
+  cli_cid VARCHAR(35) DEFAULT NULL,
+  cli_uf VARCHAR(3) DEFAULT NULL,
+  cli_email VARCHAR(45) DEFAULT NULL,
+  cli_fantasia VARCHAR(60) DEFAULT NULL,
+  cli_razao VARCHAR(100) DEFAULT NULL,
+  cli_tel VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (cli_id)
+);
+
+CREATE TABLE horarios (
+  hor_id INT NOT NULL AUTO_INCREMENT,
+  hor_tipo VARCHAR(30) NOT NULL,
+  hor_dias VARCHAR(100) NOT NULL,
+  hor_inicio TIME NOT NULL,
+  hor_fim TIME NOT NULL,
+  PRIMARY KEY (hor_id)
+);
+
+CREATE TABLE planos (
+  pla_id INT NOT NULL AUTO_INCREMENT,
+  pla_valor VARCHAR(10) NOT NULL,
+  pla_dias INT NOT NULL,
+  pla_nome VARCHAR(45) NOT NULL,
+  PRIMARY KEY (pla_id)
+);
+
+CREATE TABLE salas (
+  sal_id INT NOT NULL AUTO_INCREMENT,
+  sal_tipo VARCHAR(30) NOT NULL,
+  sal_nome VARCHAR(45) NOT NULL,
+  sal_andar VARCHAR(2) NOT NULL,
+  sal_cap INT NOT NULL,
+  sal_obs VARCHAR(150) DEFAULT NULL,
+  PRIMARY KEY (sal_id)
+);
+
+
+CREATE TABLE funcionarios (
+  fun_id INT NOT NULL AUTO_INCREMENT,
+  fun_nome varchar(45) not null,
+  fun_senha varchar(30) not null,
+  fun_setor varchar(30) not null,
+  PRIMARY KEY (fun_id)
+);
+
+CREATE TABLE cliente_plano (
+    cli_id INTEGER,
+    pla_id INTEGER,
+    FOREIGN KEY (cli_id) REFERENCES clientes(cli_id),
+    FOREIGN KEY (pla_id) REFERENCES planos(pla_id),
+    PRIMARY KEY (cli_id, pla_id)
+);
+
