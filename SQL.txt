@@ -61,4 +61,16 @@ CREATE TABLE cliente_plano (
     FOREIGN KEY (pla_id) REFERENCES planos(pla_id),
     PRIMARY KEY (cli_id, pla_id)
 );
+CREATE TABLE agendamentos (
+    age_id INT PRIMARY KEY AUTO_INCREMENT,
+    cli_id INT,  -- Chave estrangeira para a tabela cliente
+    sal_id INT,  -- Chave estrangeira para a tabela salas
+    age_data DATE NOT NULL,  -- Data do agendamento
+    age_horario_inicio TIME NOT NULL,     -- Horário de início
+    age_horario_fim TIME NOT NULL,        -- Horário de fim
+    FOREIGN KEY (cli_id) REFERENCES clientes(cli_id),  -- Relacionamento com cliente
+    FOREIGN KEY (sal_id) REFERENCES salas(sal_id)     -- Relacionamento com salas
+);
+
+
 
