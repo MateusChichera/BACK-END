@@ -68,6 +68,7 @@ CREATE TABLE agendamentos (
     age_data DATE NOT NULL,  -- Data do agendamento
     age_horario_inicio TIME NOT NULL,     -- Horário de início
     age_horario_fim TIME NOT NULL,        -- Horário de fim
+    age_status VARCHAR(20)
     FOREIGN KEY (cli_id) REFERENCES clientes(cli_id),  -- Relacionamento com cliente
     FOREIGN KEY (sal_id) REFERENCES salas(sal_id)     -- Relacionamento com salas
 );
