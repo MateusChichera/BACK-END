@@ -9,6 +9,22 @@ class AgendamentoController {
             return res.status(500).json({ message: "Erro ao obter agendamentos", error: error.message });
         }
     }
+    async Aprovar(req, res) {
+        try {
+            const { id } = req.params; // O ID do agendamento que será aprovado
+
+            // Chama a função de aprovação no modelo
+            const aprovado = await AgendamentoModel.aprovarAgendamento(id);
+
+            if (aprovado) {
+                return res.status(200).json({ message: "Agendamento aprovado com sucesso" });
+            } else {
+                return res.status(404).json({ message: "Agendamento não encontrado" });
+            }
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao aprovar agendamento", error: error.message });
+        }
+    }
 
     async VerificarDisponibilidade(req, res) {
         try {

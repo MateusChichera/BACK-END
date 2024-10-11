@@ -32,7 +32,7 @@ class FuncionarioController {
 
                 // Retornando o token no response
                 res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 3600000 });
-                res.json({ message: 'Login bem-sucedido', token, nome: funcionario[0].fun_nome });
+                res.json({ message: 'Login bem-sucedido', token, nome: funcionario[0].fun_nome, setor: funcionario[0].fun_setor });
             } else {
                 return res.status(401).json({ message: "Credenciais inválidas" });
             }
