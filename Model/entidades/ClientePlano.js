@@ -3,15 +3,16 @@ const Database = require("../database");
 const db = new Database();
 
 class ClientePlanoModel {
-    constructor({ cli_id = null, pla_id = null } = {}) {
+    constructor({ cli_id = null, pla_id = null, formapagamento = null} = {}) {
         this.cli_id = cli_id;
         this.pla_id = pla_id;
+        this.formapagamento = formapagamento;
     }
 
     // Inserir uma nova relação entre cliente e plano
     static async associar(clientePlano) {
-        const sql = 'INSERT INTO cliente_plano (cli_id, pla_id) VALUES (?, ?)';
-        const params = [clientePlano.cli_id, clientePlano.pla_id];
+        const sql = 'INSERT INTO cliente_plano (cli_id, pla_id,formadepagamento) VALUES (?, ?,?)';
+        const params = [clientePlano.cli_id, clientePlano.pla_id, clientePlano.formapagamento];
         const result = await db.executaComandoNonQuery(sql, params);
         return result.insertId ? new ClientePlanoModel(clientePlano) : null;
     }
@@ -23,7 +24,7 @@ class ClientePlanoModel {
         return results.map(row => new ClientePlanoModel(row));
     }
 
-    // Consultar uma relação específica por cliente ou plano
+
     static async ObterPorClienteEPlano(cli_id, pla_id) {
         const sql = 'SELECT * FROM cliente_plano WHERE cli_id = ? AND pla_id = ?';
         const params = [cli_id, pla_id];

@@ -31,4 +31,5 @@ app.use('/agendamento',agendamento);
 // Adiciona o middleware de autenticação somente para as rotas protegidas
 app.use('/funcionarios', funcionariosRotas);
 
-app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
+app.listen(port, '0.0.0.0', () => console.log(`Servidor rodando na porta ${port}`));
+
