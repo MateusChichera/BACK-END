@@ -13,7 +13,9 @@ class AgendamentoModel {
         age_horario_fim = null,
         cli_nome = null,
         cli_razao = null,
-        sal_nome = null 
+        sal_nome = null,
+        check_in = null,
+        check_out = null,
     } = {}) {
         this.age_id = age_id;
         this.cli_id = cli_id;
@@ -25,7 +27,46 @@ class AgendamentoModel {
         this.cli_nome = cli_nome;
         this.cli_razao = cli_razao;
         this.sal_nome = sal_nome;
+        this.check_in = check_in;
+        this.check_out = check_out;
     }
+   // Função para registrar check-in ou check-out
+static async check(age_id) {
+    const sqlSelect = `
+        SELECT check_in, check_out
+        FROM agendamentos
+        WHERE age_id = ?
+    `;
+    const paramsSelect = [age_id];
+    const results = await db.executaComando(sqlSelect, paramsSelect);
+
+    if (results.length === 0) {
+        throw new Error("Agendamento não encontrado.");
+    }
+
+    const { check_in, check_out } = results[0];
+    const now = new Date(); // Data e hora atual
+
+    if (!check_in) {
+        // Registrar check-in
+        const sqlUpdate = `UPDATE agendamentos SET check_in = ? WHERE age_id = ?`;
+        const paramsUpdate = [now, age_id];
+        const result = await db.executaComandoNonQuery(sqlUpdate, paramsUpdate);
+        return result.affectedRows > 0
+            ? { message: "Check-in realizado com sucesso!", check_in: now }
+            : { message: "Erro ao registrar check-in." };
+    } else if (!check_out) {
+        // Registrar check-out
+        const sqlUpdate = `UPDATE agendamentos SET check_out = ? WHERE age_id = ?`;
+        const paramsUpdate = [now, age_id];
+        const result = await db.executaComandoNonQuery(sqlUpdate, paramsUpdate);
+        return result.affectedRows > 0
+            ? { message: "Check-out realizado com sucesso!", check_out: now }
+            : { message: "Erro ao registrar check-out." };
+    } else {
+        return { message: "Check-in e check-out já realizados para este agendamento." };
+    }
+}
 
     // Verificar se a sala está disponível em um horário específico
     static async verificarDisponibilidade(sala_id, data, horarioInicio, horarioFim) {
@@ -79,6 +120,8 @@ class AgendamentoModel {
                 a.age_status,
                 a.age_horario_inicio,
                 a.age_horario_fim,
+                a.check_in,
+                a.check_out,
                 c.cli_nome, 
                 c.cli_razao, 
                 s.sal_nome 

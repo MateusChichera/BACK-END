@@ -9,6 +9,19 @@ class AgendamentoController {
             return res.status(500).json({ message: "Erro ao obter agendamentos", error: error.message });
         }
     }
+    async Check(req, res) {
+        try {
+            const { id } = req.params; 
+            
+            const resultado = await AgendamentoModel.check(id);
+    
+            // Retorna o resultado para o cliente
+            return res.status(200).json(resultado);
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao realizar check-in/check-out", error: error.message });
+        }
+    }
+    
     async Aprovar(req, res) {
         try {
             const { id } = req.params; // O ID do agendamento que será aprovado

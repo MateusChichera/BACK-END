@@ -12,6 +12,7 @@ router.get('/', FuncionariosC.Obter);
 router.get('/:id', FuncionariosC.ObterID);
 router.get('/buscar/:busca', FuncionariosC.ObterNome);
 router.post('/', FuncionariosC.Inserir);
+router.post('/trocar-senha', FuncionariosC.TrocarSenha);
 router.put('/:id', FuncionariosC.Atualizar);
 router.delete('/:id', FuncionariosC.Excluir);
 

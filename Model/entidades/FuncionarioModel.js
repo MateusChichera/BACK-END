@@ -14,6 +14,21 @@ class FuncionarioModel {
         this.fun_senha = fun_senha;
         this.fun_setor = fun_setor;
     }
+    static async trocarSenha(novaSenha, id) {
+        console.log('novaSenha:', novaSenha, 'id:', id);
+    
+        const sqlAtualizarSenha = 'UPDATE funcionarios SET fun_senha = ? WHERE fun_id = ?';
+        const paramsAtualizarSenha = [novaSenha, id];
+        const updateResult = await db.executaComandoNonQuery(sqlAtualizarSenha, paramsAtualizarSenha);
+    
+        if (updateResult.affectedRows > 0) { 
+            return { message: 'Senha atualizada com sucesso.' };
+        } else {
+            throw new Error('Nenhum registro foi afetado. Verifique se o ID é válido.');
+        }
+    }
+    
+    
 
     static async Autenticar(senha, id) {
         const sql = 'SELECT * FROM funcionarios WHERE fun_id = ? AND fun_senha = ?';

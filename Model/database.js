@@ -24,11 +24,12 @@ class Database {
         const connection = await this.pool.getConnection();
         try {
             const [result] = await connection.query(sql, params);
-            return result.affectedRows;  // Return the number of affected rows
+            return result;  // Retorna o objeto completo, incluindo affectedRows
         } finally {
             connection.release();
         }
     }
+    
 }
 
 module.exports = Database;

@@ -3,7 +3,21 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 class FuncionarioController {
-
+    async TrocarSenha(req, res) {
+        try {
+            const { novaSenha, id } = req.body; 
+    
+           
+            const resultado = await FuncionarioModel.trocarSenha(novaSenha, id);
+    
+           
+            return res.status(200).json({ message: resultado.message });
+        } catch (error) {
+            
+            return res.status(400).json({ message: "Erro ao trocar senha", error: error.message });
+        }
+    }
+    
     async Obter(req, res) {
         try {
             const funcionarios = await FuncionarioModel.ObterTodos();
@@ -32,7 +46,7 @@ class FuncionarioController {
 
                 // Retornando o token no response
                 res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 3600000 });
-                res.json({ message: 'Login bem-sucedido', token, nome: funcionario[0].fun_nome, setor: funcionario[0].fun_setor });
+                res.json({ message: 'Login bem-sucedido', token, nome: funcionario[0].fun_nome, setor: funcionario[0].fun_setor, fun_id: funcionario[0].fun_id });
             } else {
                 return res.status(401).json({ message: "Credenciais inválidas" });
             }

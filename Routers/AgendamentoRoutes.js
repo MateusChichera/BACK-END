@@ -13,6 +13,7 @@ router.delete('/:id', agendamentoC.Excluir.bind(agendamentoC)); // Exclui um age
 
 // Novas funcionalidades
 router.post('/data', agendamentoC.BuscarPorData.bind(agendamentoC)); // Busca agendamentos por data
+router.post('/check/:id', agendamentoC.Check.bind(agendamentoC));
 
 // Rota para editar agendamento
 router.put('/aprovar/:id', agendamentoC.Aprovar.bind(agendamentoC)); // Aprovar agendamento
