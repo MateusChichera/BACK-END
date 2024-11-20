@@ -6,6 +6,7 @@ const FuncionariosC = new FuncionarioController();
 
 // Rota pública (não requer autenticação)
 router.post('/autenticar', FuncionariosC.Autenticar);
+router.post('/redefinir', FuncionariosC.RedefinirSenha);
 
 // Rotas protegidas
 router.get('/', FuncionariosC.Obter);

@@ -3,6 +3,34 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 class FuncionarioController {
+    async RedefinirSenha(req, res) {
+        try {
+            const { email } = req.body;
+    
+            // Valida se o email foi enviado
+            if (!email) {
+                return res.status(400).json({ message: "O email é obrigatório." });
+            }
+    
+            // Chama a função na Model para redefinir a senha
+            const resultado = await FuncionarioModel.RedefinirSenha(email);
+    
+            // Retorna sucesso para o frontend
+            return res.status(200).json({ 
+                message: "Senha redefinida com sucesso. Verifique seu email.", 
+                resultado 
+            });
+        } catch (error) {
+            // Retorna erro para o frontend
+            return res.status(500).json({ 
+                message: "Erro ao redefinir senha.", 
+                error: error.message 
+            });
+        }
+    }
+    
+
+
     async TrocarSenha(req, res) {
         try {
             const { novaSenha, id } = req.body; 

@@ -100,11 +100,18 @@ class ClienteModel {
     }
     static async BuscaID(id) {
         const sql = `SELECT * FROM clientes WHERE cli_id = ?`;
-        const params = [id]; // Usamos % para indicar que o nome pode ter qualquer combinação de caracteres antes ou depois da string de busca
+        const params = [id]; 
         const results = await db.executaComando(sql, params);
-            return results; 
+    
+        // Se a consulta retornar resultados, retorna o primeiro item
+        if (results && results.length > 0) {
+            return results[0];  // Retorna o primeiro cliente (caso haja algum)
+        }
         
+        // Caso não tenha encontrado o cliente
+        return null;
     }
+    
     
     
 
