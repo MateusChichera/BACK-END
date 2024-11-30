@@ -1,7 +1,8 @@
 const Database = require("../database");
 const axios = require('axios');
 
-const db = new Database;
+const db = Database.getInstance();
+
 
 class ClienteModel {
     constructor({

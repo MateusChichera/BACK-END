@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 const sgMail = require('@sendgrid/mail');
 
 
-const db = new Database();
+const db = Database.getInstance();
 
 class FuncionarioModel {
     constructor({

@@ -1,6 +1,6 @@
 const Database = require("../database");
 
-const db = new Database();
+const db = Database.getInstance();
 
 class AgendamentoModel {
     constructor({ 

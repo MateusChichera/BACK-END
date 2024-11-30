@@ -1,7 +1,8 @@
 const Database = require('../database');
 
 
-const db = new Database;
+const db = Database.getInstance();
+
 
 class SalasModel{
         constructor({sal_id =null,sal_tipo = '', sal_nome = '', sal_andar = '',sal_cap = null, sal_obs = ''}= {}){

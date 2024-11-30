@@ -1,6 +1,6 @@
 const Database = require("../database");
 
-const db = new Database();
+const db = Database.getInstance();
 
 class ClientePlanoModel {
     constructor({ cli_id = null, pla_id = null, formapagamento = null} = {}) {
