@@ -1,5 +1,5 @@
 const ClienteModel = require('../Model/entidades/Clientemodel');
-const ReceitaWSService = require('../Model/entidades/BuscaCnpj');
+
 
 class ClienteController {
 
@@ -76,7 +76,7 @@ class ClienteController {
     async BuscarCNPJ(req, res) {
         try {
             const { cnpj } = req.params;
-            const dadosCNPJ = await ReceitaWSService.buscarCNPJ(cnpj);
+            const dadosCNPJ = await ClienteModel.buscarCNPJ(cnpj);
             return res.status(200).json(dadosCNPJ);
         } catch (error) {
             return res.status(500).json({ message: "Erro ao buscar dados do CNPJ", error: error.message });

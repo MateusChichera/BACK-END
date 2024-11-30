@@ -1,5 +1,5 @@
 const express = require('express');
-const PlanosController = require('../Controller/PlanosController');
+const PlanosController = require('../Control/PlanosController');
 const router = express.Router();
 
 // Instância do controlador

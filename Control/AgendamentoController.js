@@ -1,7 +1,5 @@
 const AgendamentoModel = require('../Model/entidades/AgendamentoModel');
-const TwilioService = require('./Twilio.js');
-const Whats = require('./WhatsApi.js');
-const ClienteModel = require('../Model/entidades/Clientemodel.js')
+
 
 class AgendamentoController {
     async Obter(req, res) {
@@ -63,34 +61,7 @@ class AgendamentoController {
             // Insere o agendamento no banco
             const agendamentoInserido = await AgendamentoModel.criar(agendamento);
     
-            // Verifica se o agendamento foi inserido com sucesso
-           /* if (agendamentoInserido) {
-                // Busca os dados do cliente usando o cli_id
-                const cliente = await ClienteModel.BuscaID(agendamento.cli_id);  // Assumindo que o modelo Cliente tem essa função
-    
-                // Verifica se o cliente foi encontrado e se ele retorna um único objeto
-                if (!cliente || Array.isArray(cliente)) {
-                    return res.status(404).json({ message: "Cliente não encontrado." });
-                }
-    
-                // Agora temos o número de telefone do cliente
-                const telefoneCliente = cliente.cli_tel;  // A variável contendo o telefone do cliente
-                console.log(cliente);
-                console.log(telefoneCliente);
-    
-                // Verifica se o telefone foi encontrado
-                if (!telefoneCliente) {
-                    return res.status(400).json({ message: "Telefone do cliente não encontrado." });
-                }
-    
-                // Mensagem que será enviada via SMS
-                const mensagem = `Olá ${cliente.cli_nome}, seu agendamento foi realizado com sucesso! Data: ${agendamentoInserido.age_data}, Horário: ${agendamentoInserido.age_horario_inicio} a ${agendamentoInserido.age_horario_fim}, aguarde a aprovação.`;
-                console.log(mensagem);
-    
-                // Chama o serviço de Twilio para enviar a mensagem
-                await TwilioService.enviarMensagemSMS(telefoneCliente, mensagem);*/
 
-                // Retorna a resposta com sucesso
                 return res.status(200).json(agendamentoInserido);
             
         } catch (error) {
@@ -159,7 +130,7 @@ class AgendamentoController {
     // Adicionando a busca por data
     async BuscarPorData(req, res) {
         try {
-            const { data } = req.body; // Mudamos para req.body
+            const { data } = req.body; 
             const agendamentos = await AgendamentoModel.BuscarPorData(data);
             return res.status(200).json(agendamentos);
         } catch (error) {

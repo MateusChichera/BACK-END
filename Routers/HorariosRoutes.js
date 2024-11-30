@@ -1,4 +1,4 @@
-const HorariosController = require('../Controller/HorariosController');
+const HorariosController = require('../Control/HorariosController');
 
 const HorarioC = new HorariosController;
 const express = require('express');

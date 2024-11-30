@@ -1,4 +1,4 @@
-const ClienteController = require("../Controller/ClienteController");
+const ClienteController = require("../Control/ClienteController");
 
 
 const ClienteC = new ClienteController();

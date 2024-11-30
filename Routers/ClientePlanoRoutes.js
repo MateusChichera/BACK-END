@@ -1,4 +1,4 @@
-const ClientePlanoController = require('../Controller/clienteplanoController');
+const ClientePlanoController = require('../Control/clienteplanoController');
 const express = require('express');
 const router = express.Router();
 

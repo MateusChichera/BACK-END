@@ -49,7 +49,7 @@ static async check(age_id) {
 
     if (!check_in) {
         // Registrar check-in
-        const sqlUpdate = `UPDATE agendamentos SET check_in = ? WHERE age_id = ?`;
+        const sqlUpdate = `UPDATE agendamentos SET check_in = ?, age_status = 'check-in' WHERE age_id = ?`;
         const paramsUpdate = [now, age_id];
         const result = await db.executaComandoNonQuery(sqlUpdate, paramsUpdate);
         return result.affectedRows > 0
@@ -57,7 +57,7 @@ static async check(age_id) {
             : { message: "Erro ao registrar check-in." };
     } else if (!check_out) {
         // Registrar check-out
-        const sqlUpdate = `UPDATE agendamentos SET check_out = ? WHERE age_id = ?`;
+        const sqlUpdate = `UPDATE agendamentos SET check_out = ?, age_status = 'check-out' WHERE age_id = ?`;
         const paramsUpdate = [now, age_id];
         const result = await db.executaComandoNonQuery(sqlUpdate, paramsUpdate);
         return result.affectedRows > 0
@@ -141,6 +141,30 @@ static async check(age_id) {
         return results.length > 0 ? new AgendamentoModel(results[0]) : null;
     }
 
+    static async BuscarPorData(data) {
+        const sql = `  SELECT 
+                a.age_id,
+                a.cli_id,
+                a.sal_id,
+                a.age_data,
+                a.age_status,
+                a.age_horario_inicio,
+                a.age_horario_fim,
+                a.check_in,
+                a.check_out,
+                c.cli_nome, 
+                c.cli_razao, 
+                s.sal_nome 
+            FROM agendamentos a
+            LEFT JOIN clientes c ON a.cli_id = c.cli_id
+            LEFT JOIN salas s ON a.sal_id = s.sal_id WHERE age_data = ?`;
+        const params = [data];
+        const results = await db.executaComando(sql, params);
+    
+       
+        return results.length > 0 ? results.map(result => new AgendamentoModel(result)) : [];
+    }
+    
     // Excluir um agendamento
     static async Excluir(age_id) {
         const sql = 'DELETE FROM agendamentos WHERE age_id = ?';

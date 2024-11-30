@@ -1,4 +1,4 @@
-const SalasController = require('../Controller/SalasController');
+const SalasController = require('../Control/SalasController');
 
 const SalaC = new SalasController;
 const express = require('express');

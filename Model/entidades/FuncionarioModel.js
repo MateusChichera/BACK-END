@@ -96,7 +96,7 @@ class FuncionarioModel {
     
         // Gera uma nova senha temporária
         const novaSenha = crypto.randomBytes(6).toString('hex'); // Senha com 6 caracteres aleatórios
-    
+        console.log('Chave SendGrid:', process.env.SENDGRID_API_KEY ? 'Carregada com sucesso' : 'NÃO CARREGADA');
         // Atualiza a senha no banco de dados
         const sqlAtualizarSenha = 'UPDATE funcionarios SET fun_senha = ? WHERE fun_email = ?';
         const paramsAtualizarSenha = [novaSenha, email];
