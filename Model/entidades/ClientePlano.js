@@ -40,6 +40,47 @@ class ClientePlanoModel {
         const result = await db.executaComandoNonQuery(sql, params);
         return result.affectedRows > 0;
     }
+
+    static async VendasMensal(dataInicio, dataFim) {
+        try {
+            // Consulta SQL atualizada para considerar um intervalo de datas
+            const sql = `
+                SELECT 
+                    p.pla_nome, 
+                    COUNT(cp.pla_id) AS total_vendas,
+                    SUM(CAST(REPLACE(p.pla_valor, 'R$', '') AS DECIMAL(10, 2))) AS total_valor_vendas
+                FROM 
+                    cliente_plano cp
+                JOIN 
+                    planos p ON cp.pla_id = p.pla_id
+                WHERE 
+                    cp.data BETWEEN ? AND ? 
+                GROUP BY 
+                    p.pla_nome
+                ORDER BY 
+                    total_vendas DESC;
+            `;
+    
+            // Executa a consulta passando os parâmetros do período (dataInicio e dataFim)
+            const rows = await db.executaComando(sql, [dataInicio, dataFim]);
+    
+            if (rows.length === 0) {
+                console.log("Nenhum dado encontrado.");
+                return []; 
+            }
+    
+            return rows;
+    
+        } catch (error) {
+            console.error('Erro ao gerar relatório:', error);
+            throw new Error('Erro ao gerar relatório: ' + error.message);
+        }
+    }
+    
+    
+
+
+    
 }
 
 module.exports = ClientePlanoModel;

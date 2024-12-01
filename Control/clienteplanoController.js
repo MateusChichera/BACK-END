@@ -46,6 +46,31 @@ class ClientePlanoController {
             return res.status(500).json({ message: "Erro ao excluir a associação", error: error.message });
         }
     }
+
+    async Vendas(req, res) {
+        try {
+            // Extrai datas de início e fim dos parâmetros da requisição
+            const { dataInicio, dataFim } = req.body;
+    
+            if (!dataInicio || !dataFim) {
+                return res.status(400).json({ message: 'Datas de início e fim são obrigatórias.' });
+            }
+    
+            const relatorio = await ClientePlanoModel.VendasMensal(dataInicio, dataFim); 
+    
+            if (!relatorio || relatorio.length === 0) {
+                return res.status(404).json({ message: 'Nenhum dado encontrado para o período especificado.' });
+            }
+    
+            res.json(relatorio);
+        } catch (error) {
+            console.error('Erro ao gerar relatório:', error); 
+            res.status(500).json({ message: 'Erro ao gerar relatório', error: error.message });
+        }
+    }
+    
+    
+    
 }
 
 module.exports = ClientePlanoController;
