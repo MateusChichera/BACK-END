@@ -82,7 +82,44 @@ class ClienteController {
             return res.status(500).json({ message: "Erro ao buscar dados do CNPJ", error: error.message });
         }
     }
-
+    //--------------------------------------------------------------RELATORIOS
+    async Rel(req, res) {
+        try {
+            const relatorio = await ClienteModel.RelCheck(); 
+            if (!relatorio || relatorio.length === 0) {
+                return res.status(404).json({ message: 'Nenhum dado encontrado para o relatório.' });
+            }
+            res.json(relatorio); // Retorna os dados para o cliente
+        } catch (error) {
+            console.error('Erro ao gerar relatório de Check-in e Check-out:', error); // Log de erro
+            res.status(500).json({ message: 'Erro ao gerar relatório de Check-in e Check-out', error: error.message });
+        }
+    }
+    async Leads(req, res) {
+        try {
+            const relatorio = await ClienteModel.Leads(); 
+            if (!relatorio || relatorio.length === 0) {
+                return res.status(404).json({ message: 'Nenhum dado encontrado para o relatório.' });
+            }
+            res.json(relatorio);
+        } catch (error) {
+            console.error('Erro ao gerar relatório:', error); // Log de erro
+            res.status(500).json({ message: 'Erro ao gerar relatório', error: error.message });
+        }
+    }
+    async ClientesPlanos(req, res) {
+        try {
+            const relatorio = await ClienteModel.ClientesPlanos(); 
+            if (!relatorio || relatorio.length === 0) {
+                return res.status(404).json({ message: 'Nenhum dado encontrado para o relatório.' });
+            }
+            res.json(relatorio);
+        } catch (error) {
+            console.error('Erro ao gerar relatório:', error); // Log de erro
+            res.status(500).json({ message: 'Erro ao gerar relatório', error: error.message });
+        }
+    }
+    
 }
 
 module.exports = ClienteController;

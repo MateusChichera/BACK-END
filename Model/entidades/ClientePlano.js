@@ -3,16 +3,17 @@ const Database = require("../database");
 const db = Database.getInstance();
 
 class ClientePlanoModel {
-    constructor({ cli_id = null, pla_id = null, formapagamento = null} = {}) {
+    constructor({ cli_id = null, pla_id = null, formapagamento = null, data=null} = {}) {
         this.cli_id = cli_id;
         this.pla_id = pla_id;
         this.formapagamento = formapagamento;
+        this.data = data;
     }
 
     // Inserir uma nova relação entre cliente e plano
     static async associar(clientePlano) {
-        const sql = 'INSERT INTO cliente_plano (cli_id, pla_id,formadepagamento) VALUES (?, ?,?)';
-        const params = [clientePlano.cli_id, clientePlano.pla_id, clientePlano.formapagamento];
+        const sql = 'INSERT INTO cliente_plano (cli_id, pla_id,formadepagamento,data) VALUES (?,?,?,?)';
+        const params = [clientePlano.cli_id, clientePlano.pla_id, clientePlano.formapagamento,clientePlano.data];
         const result = await db.executaComandoNonQuery(sql, params);
         return result.insertId ? new ClientePlanoModel(clientePlano) : null;
     }

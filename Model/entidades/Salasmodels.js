@@ -64,6 +64,32 @@ class SalasModel{
             const result = await db.executaComandoNonQuery(sql, [sal_id]);
             return result.affectedRows > 0;
         }
+
+        //RELATORIOS
+
+        static async RelUti(){
+            const sql = `SELECT 
+                        a.age_id, 
+                        DATE_FORMAT(a.age_data, '%d/%m/%Y') AS age_data_formatada,  -- Formata a data
+                        DATE_FORMAT(a.age_horario_inicio, '%d/%m/%Y %H:%i:%s') AS age_horario_inicio_formatado,  -- Formata a hora de início
+                        DATE_FORMAT(a.age_horario_fim, '%d/%m/%Y %H:%i:%s') AS age_horario_fim_formatado,  -- Formata a hora de fim
+                        s.sal_nome, 
+                        c.cli_nome, 
+                        a.age_status 
+                        FROM 
+                        agendamentos a
+                        JOIN 
+                        salas s ON a.sal_id = s.sal_id
+                        JOIN 
+                        clientes c ON a.cli_id = c.cli_id;
+                                                            `;
+        const results = await db.executaComando(sql);
+        if (results.length > 0) {
+            return results
+        } else {
+            return null;
+        }
+        }
     }
     
     module.exports = SalasModel;

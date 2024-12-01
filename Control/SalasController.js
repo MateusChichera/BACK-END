@@ -63,6 +63,15 @@ class SalasController{
         }
 
     }
+    async RelUti(req,res){
+        try{
+            const rel = await SalasModel.RelUti();
+            return res.status(200).json(rel);
+        }catch(error){
+            return res.status(500).json({message:"Erro ao montar relatorio", error: error.message});
+        }
+
+    }
 
 
 }
