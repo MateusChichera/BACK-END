@@ -12,7 +12,7 @@ class Database {
 
     this.pool = mysql.createPool({
       host: '0.tcp.sa.ngrok.io',
-      port: 13595,
+      port: 19662,
       user: 'root',
       password: 'masterkey',
       database: 'projetofinal',
